@@ -1,0 +1,122 @@
+// PPO Recommendation System Flowchart
+digraph {
+	rankdir=TB size="12,20"
+	node [fontname=Arial fontsize=10]
+	edge [fontsize=8]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	A [label="Bắt đầu"]
+	node [fillcolor=lightblue shape=box style=filled]
+	B [label="Lấy dữ liệu từ MySQL
+(user_id, product_id,
+action_type, score,
+timestamp)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	C [label="Cập nhật global_state
+(user_dict, product_dict,
+state_dim, action_dim)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	D [label="Khởi tạo PPOAgent
+(Actor: 128-128-softmax,
+Critic: 128-128-linear,
+buffer_size=10000)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	E [label="Tồn tại mô hình cũ
+(ppo_actor.keras,
+ppo_critic.keras)?"]
+	node [fillcolor=lightblue shape=box style=filled]
+	F [label="Load mô hình cũ
+(Chuyển giao nếu
+state_dim/action_dim thay đổi)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	G [label="Chuẩn bị dữ liệu offline
+(states, actions, rewards,
+values, log_probs)"]
+	H [label="Huấn luyện PPO offline
+(10 epochs, batch_size=64,
+gamma=0.95, clip_ratio=0.2)"]
+	I [label="Lưu mô hình
+(ppo_actor.keras,
+ppo_critic.keras,
+ppo_dims.json)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	J [label="Nhận yêu cầu /recommend
+(user_id)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	K [label="User_id có trong
+user_dict không?"]
+	node [fillcolor=lightcoral shape=box style=filled]
+	L [label="Trả về JSON
+(recommendations rỗng)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	M [label="Đã quá 3600 giây
+kể từ lần tải dữ liệu cuối?"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	N [label="Cập nhật global_state
+và khởi tạo lại model
+nếu kích thước thay đổi"]
+	node [fillcolor=lightblue shape=box style=filled]
+	O [label="Tạo state
+(user_id, last_product_id,
+user_history_len)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	P [label="Dự đoán action_probs
+(model.actor.predict(state))"]
+	Q [label="Sắp xếp action_probs
+và chọn top 50 sản phẩm"]
+	node [fillcolor=lightblue shape=box style=filled]
+	R [label="Trả về JSON
+(user_id, recommendations)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	S [label="Nhận yêu cầu /update_policy
+(user_id, product_id, reward)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	T [label="User_id và product_id
+có trong dữ liệu không?"]
+	node [fillcolor=lightcoral shape=box style=filled]
+	U [label="Trả về lỗi
+(user/sản phẩm không tồn tại)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	V [label="Tạo state và lưu vào
+online_buffer
+(state, action, reward,
+value, log_prob)"]
+	W [label="Kiểm tra đủ số mẫu
+hoặc đạt train_interval?"]
+	X [label="Huấn luyện PPO online
+(10 epochs, batch_size=64)"]
+	Y [label="Lưu mô hình nếu
+đạt save_interval"]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	Z [label="Kết thúc"]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F [label="Có"]
+	E -> G [label="Không"]
+	F -> G
+	G -> H
+	H -> I
+	I -> J [label="API /recommend" style=dashed]
+	I -> S [label="API /update_policy" style=dashed]
+	J -> K
+	K -> L [label="Không"]
+	K -> M [label="Có"]
+	M -> N [label="Có"]
+	M -> O [label="Không"]
+	N -> O
+	O -> P
+	P -> Q
+	Q -> R
+	R -> Z [label="Hoàn tất /recommend" style=dotted]
+	L -> Z [label="Hoàn tất /recommend (rỗng)" style=dotted]
+	S -> T
+	T -> U [label="Không"]
+	T -> V [label="Có"]
+	V -> W
+	W -> X [label="Có"]
+	W -> Z [label="Không" style=dotted]
+	X -> Y
+	Y -> Z [label="Hoàn tất /update_policy" style=dotted]
+	U -> Z [label="Hoàn tất /update_policy (lỗi)" style=dotted]
+}

@@ -1,0 +1,115 @@
+// DQN Recommendation System Flowchart
+digraph {
+	rankdir=TB size="12,20"
+	node [fontname=Arial fontsize=10]
+	edge [fontsize=8]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	A [label="Bắt đầu"]
+	node [fillcolor=lightblue shape=box style=filled]
+	B [label="Lấy dữ liệu từ MySQL
+(user_id, product_id,
+action_type, score,
+timestamp)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	C [label="Cập nhật global_data
+(user_dict, product_dict,
+state_dim, action_dim)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	D [label="Khởi tạo mô hình DQN
+(128-128-linear, state_dim,
+action_dim, replay_buffer=1000)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	E [label="Tồn tại mô hình cũ
+(dqn_model.keras)?"]
+	node [fillcolor=lightblue shape=box style=filled]
+	F [label="Load mô hình cũ
+(Chuyển giao trọng số
+nếu state_dim thay đổi)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	G [label="Chuẩn bị dữ liệu huấn luyện
+(state, action, reward,
+next_state từ lịch sử)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	H [label="Huấn luyện DQN
+(10 episodes, batch_size=32,
+epsilon_decay=0.99, gamma=0.9)"]
+	I [label="Lưu mô hình
+(dqn_model.keras,
+dqn_config.json)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	J [label="Nhận yêu cầu /recommend
+(user_id)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	K [label="User_id có trong
+user_dict không?"]
+	node [fillcolor=lightcoral shape=box style=filled]
+	L [label="Trả về JSON
+(recommendations rỗng)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	M [label="Cập nhật global_data
+(nếu quá 60 giây,
+chuyển giao trọng số nếu cần)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	N [label="Lấy sản phẩm cuối cùng
+và tạo state
+(user_id, last_product_id)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	O [label="Dự đoán Q-values
+(model.predict(state))"]
+	P [label="Sắp xếp Q-values
+và chọn top 200 sản phẩm"]
+	node [fillcolor=lightblue shape=box style=filled]
+	Q [label="Trả về JSON
+(user_id, recommendations)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	R [label="Nhận yêu cầu /update_policy
+(user_id, product_id, reward)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	S [label="User_id và product_id
+có trong dữ liệu không?"]
+	node [fillcolor=lightcoral shape=box style=filled]
+	T [label="Trả về lỗi
+(user/sản phẩm không tồn tại)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	U [label="Cập nhật global_data
+(nếu quá 60 giây,
+chuyển giao trọng số nếu cần)"]
+	V [label="Tạo state, next_state
+và cập nhật Q-values"]
+	W [label="Huấn luyện mô hình
+và lưu mô hình"]
+	X [label="Dự đoán và trả về
+recommendations mới"]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	Y [label="Kết urged"]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F [label="Có"]
+	E -> G [label="Không"]
+	F -> G
+	G -> H
+	H -> I
+	I -> J [label="API /recommend" style=dashed]
+	I -> R [label="API /update_policy" style=dashed]
+	J -> K
+	K -> L [label="Không"]
+	K -> M [label="Có"]
+	M -> N
+	N -> O
+	O -> P
+	P -> Q
+	Q -> Y [label="Hoàn tất /recommend" style=dotted]
+	L -> Y [label="Hoàn tất /recommend
+(rỗng)" style=dotted]
+	R -> S
+	S -> T [label="Không"]
+	S -> U [label="Có"]
+	U -> V
+	V -> W
+	W -> X
+	X -> Y [label="Hoàn tất /update_policy" style=dotted]
+	T -> Y [label="Hoàn tất /update_policy
+(lỗi)" style=dotted]
+}

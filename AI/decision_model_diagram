@@ -1,0 +1,26 @@
+// Decision Making Model
+digraph {
+	bgcolor=white fontname=Arial rankdir=LR splines=ortho
+	U [label="Người dùng
+(User)" color="#0066CC" fillcolor="#E6F3FF" fontcolor="#003366" fontsize=12 shape=ellipse style=filled]
+	W [label="Web
+(Frontend)" color="#009900" fillcolor="#E6FFE6" fontcolor="#003300" fontsize=12 shape=box style="filled,rounded"]
+	B [label="Backend
+(Xử lý hành vi)" color="#CC0000" fillcolor="#FFE6E6" fontcolor="#330000" fontsize=12 shape=box style="filled,rounded"]
+	D [label="Cơ sở dữ liệu
+(Database)" color="#FF9900" fillcolor="#FFFFCC" fontcolor="#663300" fontsize=12 shape=cylinder style=filled]
+	O [label="Kết quả
+(Sản phẩm gợi ý)" color="#0066CC" fillcolor="#E6F3FF" fontcolor="#003366" fontsize=12 shape=ellipse style=filled]
+	U -> W [label="Tương tác
+(Gửi yêu cầu)" color="#0066CC" fontcolor="#003366" fontsize=10]
+	W -> B [label="Chuyển hành vi" color="#009900" fontcolor="#003300" fontsize=10]
+	B -> D [label="Truy vấn dữ liệu" color="#CC0000" fontcolor="#330000" fontsize=10]
+	D -> B [label="Trả về dữ liệu" color="#FF9900" fontcolor="#663300" fontsize=10]
+	B -> W [label="Gửi gợi ý" color="#009900" fontcolor="#003300" fontsize=10]
+	W -> O [label="Hiển thị sản phẩm" color="#0066CC" fontcolor="#003366" fontsize=10]
+	O -> U [label="Nhận gợi ý" color="#0066CC" fontcolor="#003366" fontsize=10]
+	node [rank=same]
+	edge [minlen=2]
+	U [rank=source]
+	O [rank=sink]
+}

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thời Trang Nữ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-white bg-white ">
+        <div class="container d-flex align-items-center">
+            <!-- Logo và nút menu -->
+            <div class="d-flex align-items-center">
+                <button id="menuButton" class="btn menu-btn me-3" style="font-size: 30px;" style="display: none;">☰</button>
+                <a class="navbar-brand" href="#">
+                    <img src="./assets/images/Q (1).png" alt="Logo" style="height: 80px;">
+                </a>
+            </div>
+
+            <!-- Thanh tìm kiếm ở giữa -->
+            <div class="d-flex flex-grow-1 justify-content-center">
+                <form class="d-flex w-50">
+                    <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                    <button class="btn btn-outline-dark" type="submit">🔍</button>
+                </form>
+            </div>
+
+            <!-- Giỏ hàng, tài khoản, liên hệ bên phải -->
+            <div class="d-flex">
+                <a href="#" class="nav-link me-3 show_signin">🛒 Giỏ hàng</a>
+                <a href="#" class="nav-link me-3 show_signin">👤 Tài khoản</a>
+                <a href="#" class="nav-link show_signin">📞 Liên hệ</a>
+            </div>
+        </div>
+
+        <!-- Sidebar menu (Ẩn ban đầu) -->
+        <div id="sidebarMenu" class="sidebar-menu">
+            <ul>
+                <li class="menu-item">
+                    <a href="#">👗 Váy</a>
+                    <ul class="submenu">
+                        <li><a href="#">👗 Váy dài</a></li>
+                        <li><a href="#">👗 Váy ngắn</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#">👚 Áo</a>
+                    <ul class="submenu">
+                        <li><a href="#">👕 Áo sơ mi</a></li>
+                        <li><a href="#">👕 Áo thun</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">👖 Quần</a></li>
+                <li><a href="#">👜 Túi xách</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Form đăng nhập ẩn -->
+    <div id="loginForm" class="login-form">
+        <div class="login-content">
+            <span id="closeLogin" class="close-btn">&times;</span>
+            <h3 class="text-center">Đăng Nhập</h3>
+            <form action="process_login.php" method="POST">
+                <div class="mb-3">
+                    <label for="loginInput" class="form-label">Email hoặc Số điện thoại</label>
+                    <input type="text" class="form-control" id="loginInput" name="loginInput" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Đồng ý với các điều khoản chính sách</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 bg-dark">Đăng nhập</button>
+                <p class="text-center mt-3">
+                    Chưa có tài khoản? <a href="#">Tạo tài khoản</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- CSS cho form đăng nhập -->
+    <style>
+        .login-form {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            /* Ẩn ban đầu */
+            width: 30%;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+            transition: right 0.5s ease-in-out;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .login-form.active {
+            right: 0;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+
+    <!-- JavaScript điều khiển hiển thị form -->
+
+
+    <!-- Bootstrap Carousel -->
+    <div id="carouselExample" class="carousel slide position-relative" data-bs-ride="carousel">
+        <!-- Chữ đè lên slide -->
+        <div class="carousel-caption d-flex align-items-center justify-content-center">
+            <h2 class="banner-text">Khám Phá Bộ Sưu Tập Mới Nhất</h2>
+        </div>
+
+        <div class="carousel-inner">
+            <!-- Ảnh 1 -->
+            <div class="carousel-item active">
+                <img src="./assets/images/anh_slide1.jpg" class="d-block w-100" alt="Ảnh 1">
+            </div>
+            <!-- Ảnh 2 -->
+            <div class="carousel-item">
+                <img src="./assets/images/anh_slide2.jpg" class="d-block w-100" alt="Ảnh 2">
+            </div>
+            <!-- Ảnh 3 -->
+            <div class="carousel-item">
+                <img src="./assets/images/anh_slide1.jpg" class="d-block w-100" alt="Ảnh 3">
+            </div>
+        </div>
+
+        <!-- Nút điều hướng trái -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <!-- Nút điều hướng phải -->
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    <!-- Danh mục sản phẩm -->
+    <div class="container my-5">
+        <h2 class="text-center">Sản Phẩm Nổi Bật</h2>
+        <div class="row">
+            <div class="col-md-4 ">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">ĐẦM TRẮNG HOA XANH GINKGO PHỐI TAFTA</h5>
+                        <p class="card-text text-danger">1.200.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Áo Kiểu</h5>
+                        <p class="card-text text-danger">890.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Chân Váy</h5>
+                        <p class="card-text text-danger">650.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Chân Váy</h5>
+                        <p class="card-text text-danger">650.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm" style="text-decoration: none;color: black;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">ĐẦM TRẮNG HOA XANH GINKGO PHỐI TAFTA </h5>
+                        <p class="card-text text-danger">1.200.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="card product-card">
+                    <img src="./assets/images/vidu1.jpg" alt="Sản phẩm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">ĐẦM TRẮNG HOA XANH GINKGO PHỐI TAFTA </h5>
+                        <p class="card-text text-danger">1.200.000đ</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center" id="pagination">
+            <!-- Các nút phân trang sẽ được thêm vào bằng JavaScript -->
+        </ul>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 Thời Trang Nữ. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let menuButton = document.querySelector("#menuButton");
+            let sidebarMenu = document.querySelector("#sidebarMenu");
+            let accountBtn = document.querySelectorAll(".show_signin");
+            let loginForm = document.getElementById("loginForm");
+            let closeLogin = document.getElementById("closeLogin");
+
+            menuButton.addEventListener("mouseenter", function () {
+                sidebarMenu.style.display = "block";
+            });
+
+            sidebarMenu.addEventListener("mouseleave", function () {
+                sidebarMenu.style.display = "none";
+            });
+            accountBtn.forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault(); // Ngăn chặn load trang
+                    loginForm.classList.add("active");
+                });
+            });
+
+            closeLogin.addEventListener("click", function () {
+                loginForm.classList.remove("active");
+            });
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

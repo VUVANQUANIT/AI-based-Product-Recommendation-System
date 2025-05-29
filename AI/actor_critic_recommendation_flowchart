@@ -1,0 +1,98 @@
+// Actor-Critic Recommendation System Flowchart
+digraph {
+	rankdir=TB size="15,30"
+	node [fontsize=10]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	A [label="Bắt đầu" pos="0,0!"]
+	node [fillcolor=lightblue shape=box style=filled]
+	B [label="Lấy dữ liệu từ MySQL
+(user_id, product_id,
+action_type, score,
+category_id, timestamp)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	C [label="Cập nhật global_data
+(user_ids, product_ids,
+category_ids, state_dim,
+action_dim)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	D [label="Khởi tạo Actor-Critic
+(Actor: 128-64-softmax,
+Critic: 128-64-1,
+replay_buffer=500)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	E [label="Chuẩn bị dữ liệu
+(state, action, reward,
+next_state từ lịch sử)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	F [label="Huấn luyện Actor-Critic
+(100 epochs, batch_size=32,
+actor_loss, critic_loss)"]
+	G [label="Lưu mô hình
+(actor.keras, critic.keras)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	H [label="Nhận yêu cầu /recommend
+(user_id, num_recommendations)"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	I [label="User_id có trong
+user_id_to_index không?"]
+	node [fillcolor=lightcoral shape=box style=filled]
+	J [label="Trả về sản phẩm phổ biến
+hoặc ngẫu nhiên"]
+	node [fillcolor=lightblue shape=box style=filled]
+	K [label="Load mô hình
+(actor.keras, critic.keras)"]
+	node [fillcolor=lightblue shape=box style=filled]
+	L [label="Lấy lịch sử 10 hành động,
+ignored_products, clicked_products,
+top_categories"]
+	node [fillcolor=lightyellow shape=diamond style=filled]
+	M [label="Có lịch sử không?"]
+	node [fillcolor=lightblue shape=box style=filled]
+	N [label="Tạo state
+(user_id, product_scores,
+category_scores, thời gian)"]
+	O [label="Dự đoán action_probs
+(actor.predict(state))"]
+	P [label="Tính final_scores
+(prob, history, recent,
+related, penalty)"]
+	Q [label="Sắp xếp hoặc chọn ngẫu nhiên
+(epsilon=0.02)"]
+	R [label="Cập nhật replay_buffer
+và huấn luyện nếu đủ dữ liệu"]
+	S [label="Trả về JSON
+(user_id, recommendations,
+total)"]
+	node [fillcolor=lightgreen shape=box style=filled]
+	T [label="Background Training
+(cập nhật global_data,
+huấn luyện mỗi 5 phút)"]
+	node [fillcolor=lightpink shape=ellipse style=filled]
+	U [label="Kết thúc" pos="0,-30!"]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G
+	G -> H [label="API /recommend" style=dashed]
+	G -> T [label="Background Training" style=dashed]
+	H -> I
+	I -> J [label="Không"]
+	I -> K [label="Có"]
+	K -> L
+	L -> M
+	M -> J [label="Không"]
+	M -> N [label="Có"]
+	N -> O
+	O -> P
+	P -> Q
+	Q -> R
+	R -> S
+	J -> U [label="Hoàn tất /recommend
+(phổ biến/ngẫu nhiên)" constraint=true style=dotted weight=10]
+	S -> U [label="Hoàn tất /recommend
+(Actor-Critic)" constraint=true style=dotted weight=10]
+	T -> U [label="Hoàn tất
+background training" constraint=true style=dotted weight=10]
+}

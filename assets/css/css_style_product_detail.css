@@ -1,0 +1,171 @@
+.banner {
+    background: url('https://via.placeholder.com/1500x500') no-repeat center;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+.product-card img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+/* Nút menu */
+.menu-btn {
+    font-size: 30px; /* Phóng to icon */
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: -100px; /* Đưa nút vào bên trái 100px */
+}
+
+
+/* Sidebar menu */
+.sidebar-menu {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    width: 200px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Ẩn ban đầu */
+    padding: 10px;
+    z-index: 1000;
+}
+
+/* Cấu trúc danh sách */
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 10px;
+    position: relative;
+}
+
+/* Các mục menu con */
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: white;
+    border: 1px solid #ddd;
+    width: 150px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submenu li {
+    padding: 8px;
+}
+.navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+.carousel {
+    margin-top: 100px!important; /* Điều chỉnh theo chiều cao thực tế của navbar */
+}
+
+
+.menu-item:hover > .submenu {
+    display: block;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #f0f0f0;
+}
+.btn-outline-dark:hover {
+    background-color: transparent !important; /* Giữ nguyên màu nền */
+    color: inherit !important; /* Giữ nguyên màu chữ */
+    border-color: inherit !important; /* Giữ nguyên viền */
+}
+.carousel-item img {
+    height: 600px; /* Chiều cao cố định */
+    object-fit: cover; /* Cắt ảnh vừa với khung */
+}
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Nền mờ giúp chữ dễ đọc */
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+}
+
+.banner-text {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.product-card{
+    margin-bottom: 50px;
+}
+.card-title {
+    min-height: 80px; /* Đặt chiều cao cố định phù hợp */
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    text-align: center;
+}
+
+.login-form {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Ẩn ban đầu */
+    width: 30%;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    transition: right 0.5s ease-in-out;
+    padding: 20px;
+    z-index: 1000;
+}
+.login-form.active {
+    right: 0;
+}
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    float: right;
+}
+.product-link {
+    text-decoration: none;  /* Bỏ gạch chân */
+    color: black;           /* Đổi màu chữ về đen */
+}
+
+.product-link:hover {
+    color: #ff5733; /* Màu khi hover (có thể thay đổi theo ý muốn) */
+}
+.product-description {
+    font-size: 16px; /* Cỡ chữ vừa phải */
+    font-family: Arial, sans-serif; /* Font dễ đọc */
+    line-height: 1.6; /* Giãn dòng cho dễ nhìn */
+    color: #333; /* Màu chữ tối hơn để dễ đọc */
+    text-align: justify; /* Căn chỉnh đều hai bên */
+    margin-top: 10px; /* Khoảng cách với phần trên */
+}
